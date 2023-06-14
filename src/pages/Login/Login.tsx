@@ -7,15 +7,25 @@ import { Formik } from 'formik';
 import usePost from '../../hooks/usePost';
 import { API_URL } from '../../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {setUser} from '../../context/reducer';
+import  {RootState} from '../../context/store'
+
+
 const Login = ({navigation}) => {  
     const {data,loading,error,post} = usePost()
+   
+    const dispatch = useDispatch();
+
     const handleLogin = (values) => {
         post(API_URL+"/auth/login",values);
     
         console.log(data);
-        if(data){
-            AsyncStorage.setItem("@USER",JSON.stringify(user));
-            navigation.navigate("Products")
+        if(data){            
+            dispatch(setUser(user));   
+            // navigation.navigate("Products")
+                     
         }
     }
     
@@ -54,10 +64,7 @@ const user = {
         "email": "john@gmail.com",
         "username": "johnd",
         "password": "m38rmF$",
-        "name": {
-        "firstname": "john",
-        "lastname": "doe"
-        },
-        "phone": "1-570-236-7033",
-        "__v": 0
+        "phone": "1-570-236-7033",        
 }
+
+

@@ -5,6 +5,9 @@ import {API_URL} from '../../../config'
 import ProductCard from '../../components/ProductCard/ProductCard';
 import useFetch from '../../hooks/useFetch/useFetch';
 import Loading from '../../components/Loading/Loading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../context/store';
 const Products = ({navigation})=>{
     
     const {error,loading,data} = useFetch(API_URL+"/products");
@@ -13,6 +16,7 @@ const Products = ({navigation})=>{
         
         navigation.navigate('ProductDetail',{id})
     }
+    const userSession = useSelector((state:RootState) => state.user)
     const renderProduct = ({item}) => <ProductCard product={item} onSelect={()=>handleProductSelect(item.id)}/>
     if(loading){
         return  <ActivityIndicator size='large'/>

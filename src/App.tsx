@@ -5,26 +5,43 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import Products from './pages/Products/Products';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Login from './pages/Login/Login'
-
+import { Provider,useDispatch,useSelector } from 'react-redux';
+import { RootState } from './context/store';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { removeUser } from './context/reducer';
 const Stack = createNativeStackNavigator();
 const App = ()=>{
-  return(
+  const userSession = useSelector((state:RootState) => state.user)
+  const dispatch = useDispatch();
+  return(    
     <NavigationContainer>
       <Stack.Navigator >
-        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
-        <Stack.Screen name="Products" component={Products} options={{
+        {          
+         !userSession ?  <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/> : 
+        <>
+         
+         <Stack.Screen name="Products" component={Products} options={{
           title:"Dükkan",
           headerStyle:{backgroundColor:'#90caf9'},
           headerTintColor:'#ffff',
-          headerBackVisible:false
-
-        }}/>
+          headerBackVisible:false,
+          headerRight:()=> <Icon name="logout" size={20} color="white" onPress={()=> {
+            dispatch(removeUser())
+            console.log("ddd")
+          }}/>
+          
+        
+        }}
+        />
         <Stack.Screen name="ProductDetail" component={ProductDetail}  options={{
           title:"Detay",
           headerStyle:{backgroundColor:'#90caf9'},
-          headerTintColor:'#ffff'
-
-        }}/>
+          headerTintColor:'#ffff'}}
+          />
+          </>
+  } 
+       
+      
       </Stack.Navigator>
     </NavigationContainer>
   )
