@@ -15,7 +15,8 @@ const App = ()=>{
         <Stack.Screen name="Products" component={Products} options={{
           title:"Dükkan",
           headerStyle:{backgroundColor:'#90caf9'},
-          headerTintColor:'#ffff'
+          headerTintColor:'#ffff',
+          headerBackVisible:false
 
         }}/>
         <Stack.Screen name="ProductDetail" component={ProductDetail}  options={{

@@ -1,12 +1,14 @@
 import React from 'react';
-import {Text,TouchableWithoutFeedback,TouchableOpacity,View} from 'react-native';
+import {Text,TouchableWithoutFeedback,TouchableOpacity,View, ActivityIndicator} from 'react-native';
 
 import styles from './CustomButton-styles'
-const CustomButton = ({title,onPress})=>{
+const CustomButton = ({title,onPress,loading})=>{
     return(        
-        <TouchableOpacity style={styles.container} onPress={onPress}>
-       
-            <Text style={styles.text}>{title}</Text>
+        <TouchableOpacity style={styles.container} onPress={onPress} disabled={loading}>
+       {
+            loading ? <ActivityIndicator color="white" /> :   <Text style={styles.text}>{title}</Text>
+       }
+          
         </TouchableOpacity>        
         
     )
